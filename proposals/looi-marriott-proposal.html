@@ -411,7 +411,7 @@
     btn.disabled=true; st.textContent='Sending…';
     var fb={name:payload.name,email:payload.email,message:'Decision: '+payload.stance+'\n\n'+(payload.notes||'(no notes)')+'\n\nPage: '+payload.page,_subject:'LOOI proposal feedback — '+payload.name+' — '+payload.stance,_gotcha:''};
     var mail=fetch('https://formspree.io/f/mnjevgjq',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(fb)});
-    var log=fetch('/api/proposal-feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var log=fetch('https://robotist-proposal.onrender.com/api/proposal-feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     try{ await Promise.allSettled([mail,log]); }catch(err){}
     st.textContent=''; btn.disabled=true; f.hidden=true; done.hidden=false; done.scrollIntoView({block:'center',behavior:'smooth'});
   });

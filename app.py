@@ -8,6 +8,14 @@ DATA.mkdir(parents=True, exist_ok=True)
 LOG = DATA / "proposal-feedback.jsonl"
 TOKEN = os.environ.get("FEEDBACK_TOKEN", "")
 ALLOWED = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".woff2", ".pdf"}
+ALLOWED_ORIGINS = {
+    "robotist.com.au",
+    "www.robotist.com.au",
+    "robotist-web.onrender.com",
+    "robotist-proposal.onrender.com",
+    "localhost:8000",
+    "127.0.0.1:8000",
+}
 RATE = {}
 
 app = Flask(__name__)
@@ -85,6 +93,26 @@ def clear_feedback():
     if LOG.exists():
         LOG.write_text("", encoding="utf-8")
     return jsonify(ok=True)
+
+
+@app.route("/api/proposal-feedback", methods=["OPTIONS"])
+def feedback_preflight():
+    return ("", 204)
+
+
+@app.after_request
+def feedback_cors(resp):
+    if request.path.startswith("/api/proposal-feedback"):
+        origin = request.headers.get("Origin", "")
+        host = origin.split("//")[-1].split("/")[0].lower()
+        if host in ALLOWED_ORIGINS:
+            resp.headers["Access-Control-Allow-Origin"] = origin
+            resp.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+            resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+            resp.headers["Vary"] = "Origin"
+        if request.method == "OPTIONS":
+            resp.headers["Access-Control-Max-Age"] = "600"
+    return resp
 
 
 if __name__ == "__main__":
