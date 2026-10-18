@@ -135,6 +135,7 @@
 .fb .sent{border:1px solid var(--line);border-radius:14px;padding:22px 24px;max-width:620px;background:#071120}
 .fb .sent strong{display:block;margin-bottom:6px;font-size:17px}
 @media(max-width:640px){.fb form{grid-template-columns:1fr}}
+.fb form[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -412,7 +413,7 @@
     var mail=fetch('https://formspree.io/f/mnjevgjq',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(fb)});
     var log=fetch('/api/proposal-feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     try{ await Promise.allSettled([mail,log]); }catch(err){}
-    f.hidden=true; done.hidden=false; done.scrollIntoView({block:'center',behavior:'smooth'});
+    st.textContent=''; btn.disabled=true; f.hidden=true; done.hidden=false; done.scrollIntoView({block:'center',behavior:'smooth'});
   });
 })();
 </script>
