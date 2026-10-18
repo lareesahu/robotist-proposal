@@ -78,5 +78,14 @@ def get_feedback():
     return jsonify(count=len(items), items=items[-50:], last=max([int(r["id"]) for r in items], default=since))
 
 
+@app.delete("/api/proposal-feedback")
+def clear_feedback():
+    if not TOKEN or request.args.get("token") != TOKEN:
+        abort(404)
+    if LOG.exists():
+        LOG.write_text("", encoding="utf-8")
+    return jsonify(ok=True)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))
