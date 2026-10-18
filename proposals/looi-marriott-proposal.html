@@ -406,7 +406,8 @@
     if(!d.get('name')||!d.get('email')||!d.get('stance')){ st.textContent='Please add your name, email and where you stand.'; return; }
     var payload={name:String(d.get('name')).slice(0,120),email:String(d.get('email')).slice(0,160),stance:String(d.get('stance')).slice(0,60),notes:String(d.get('notes')||'').slice(0,4000),page:location.pathname,at:new Date().toISOString()};
     btn.disabled=true; st.textContent='Sending…';
-    var mail=fetch('https://formspree.io/f/mnjevgjq',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.assign({},payload,{_subject:'LOOI proposal feedback — '+payload.name,kind:'proposal-feedback'}))});
+    var fb={name:payload.name,email:payload.email,message:'Decision: '+payload.stance+'\n\n'+(payload.notes||'(no notes)')+'\n\nPage: '+payload.page,_subject:'LOOI proposal feedback — '+payload.name+' — '+payload.stance,_gotcha:''};
+    var mail=fetch('https://formspree.io/f/mnjevgjq',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(fb)});
     var log=fetch('/api/proposal-feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     try{ await Promise.allSettled([mail,log]); }catch(err){}
     f.hidden=true; done.hidden=false; done.scrollIntoView({block:'center',behavior:'smooth'});
