@@ -114,19 +114,21 @@
 <style>
 /* proposal feedback */
 .fb{border-top:1px solid var(--line);background:linear-gradient(180deg,#050C16,#030810)}
-.fb .wrap{padding:clamp(44px,5.5vw,76px) 0}
+.fb .wrap{padding-top:clamp(44px,5.5vw,76px);padding-bottom:clamp(44px,5.5vw,76px)}
 .fb h2{margin:14px 0 10px}
 .fb p.lede{color:var(--grey-1);max-width:640px;margin-bottom:26px}
 .fb form{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;max-width:760px}
 .fb .field{display:flex;flex-direction:column;gap:8px}
 .fb .field.wide{grid-column:1/-1}
-.fb label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+.fb label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-1)}
 .fb input[type=text],.fb input[type=email],.fb textarea{background:#071120;border:1px solid var(--line);border-radius:10px;color:#E9F1F8;padding:13px 14px;font:inherit;font-size:15px}
 .fb input:focus,.fb textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 .fb textarea{min-height:104px;resize:vertical}
 .fb .stances{display:flex;flex-wrap:wrap;gap:10px}
 .fb .stances label{display:inline-flex;align-items:center;gap:9px;padding:11px 15px;border:1px solid var(--line);border-radius:999px;text-transform:none;letter-spacing:0;font-size:14px;color:#D6E2EE;cursor:pointer}
-.fb .stances input{accent-color:var(--accent)}
+.fb .stances input{appearance:none;-webkit-appearance:none;width:16px;height:16px;border-radius:50%;border:1.5px solid #5A6B7C;margin:0;position:relative;flex:none}
+.fb .stances input:checked{border-color:var(--accent)}
+.fb .stances input:checked::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
 .fb .actions{grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:4px}
 .fb .hp{position:absolute;left:-9999px}
 .fb .status{font-size:14px;color:var(--grey-1)}
