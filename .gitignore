@@ -1,3 +1,6 @@
 data/
 __pycache__/
 *.pyc
+.feedback_token
+.service.json
+data/
